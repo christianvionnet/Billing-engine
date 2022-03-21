@@ -8,7 +8,6 @@ fx_rates = pd.read_csv("fx_rates.csv")
 platform_spend = pd.read_csv("platform_spend.csv")
 
 #Create dinamically dataframes and variables for each client
-
 for i in range(len(clients)):
     exec ("client_%s = clients.loc[[i]]" % (i))
     exec ("total_client_%s = 0" % (i))
