@@ -1,4 +1,6 @@
-,Client ID,Client Name,Bill Currency,Service Rate,Total Spent
-0,1,C3P0 Ads,CHA,0.1,2750.0
-1,2,Costa Atlantica,TAZ,0.05,315.0
-2,3,Only Programmatic Marketing,TOK,0.2,18000.0
+C3P0 Ads,Costa Atlantica,Only Programmatic Marketing
+2750.0,,
+2750.0,,
+,315.0,
+,,18000.0
+,,18000.0
