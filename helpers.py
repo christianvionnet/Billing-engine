@@ -1,10 +1,15 @@
 import pandas as pd
-import logging
+from logs_handler import MediaMonksLogger
+
+# Init logger
+mmLogger = MediaMonksLogger(loggername="MediaMonksLogger", stream_logs=True).logger
 
 # Encharges of getting total amount for each client
-def get_total_amount(clients:pd.DataFrame, platform_spend:pd.DataFrame, fx_rates:pd.DataFrame) -> None:
+def get_total_amount(clients:pd.DataFrame, platform_spend:pd.DataFrame, fx_rates:pd.DataFrame) -> pd.DataFrame:
 
     try:
+        
+        
         # Merge dataframes
         client = merge_dataframes(clients, platform_spend)
 
@@ -16,15 +21,20 @@ def get_total_amount(clients:pd.DataFrame, platform_spend:pd.DataFrame, fx_rates
         
         # Apply calculate_total() to each client dataframe
         for client in client_list:
-            client_list[client]["Total"] = client_list[client].apply(lambda row: calculate_total(row,fx_rates), axis=1)
+            client_list[client]["Total"] = client_list[client].apply(lambda row: calculate_total(row,fx_rates), axis=1) 
         
         # Create final column with all total amounts
         total = {}
         for client in client_list:
-            print(client_list[client]["Total"].sum() * (1+client_list[client]["Service Rate"]))
             total[client] = client_list[client]["Total"].sum() * (1+client_list[client]["Service Rate"])
-            
-        return total
+        
+        # Add total amounts to the final dataframe Total column
+        clients["Total"] = 0
+        for client,i in zip(total,range(len(total))):
+            clients.loc[i,"Total"] = total[client].unique()
+        
+        # Returns final dataframe
+        return clients
     
     except Exception as e:
         print(f"An error has ocurred while executing the program: {e}")
@@ -37,7 +47,7 @@ def merge_dataframes(df1:pd.DataFrame, df2:pd.DataFrame) -> pd.DataFrame:
 # Encharges of calculating each client total
 def calculate_total(df1:pd.DataFrame, df2:pd.DataFrame) -> float:
     
-    logging.info("Entering calculate_total()...")
+    mmLogger.info("Entering calculate_total()...")
     
     df2.index = df2["Origin Currency"]
     
@@ -46,9 +56,8 @@ def calculate_total(df1:pd.DataFrame, df2:pd.DataFrame) -> float:
     total = 0
 
     for currency in currencies:
-        
         if(df1.loc["Currency"] == currency):
             total = total + df1.loc["Advertising Cost"] / df2.loc[df1.loc["Bill Currency"],currency]
 
-    logging.info("Exiting calculate_total()")            
+    mmLogger.info("Exiting calculate_total()")            
     return total
