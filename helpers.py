@@ -35,7 +35,7 @@ def get_total_amount(clients:pd.DataFrame, platform_spend:pd.DataFrame, fx_rates
         return clients
     
     except Exception as e:
-        mmLogger.info(f"An error has ocurred while executing the program: {e}")
+        mmLogger.error(f"An error has ocurred while executing the program: {e}")
         
 # Encharges of merging datafremes into only one
 def merge_dataframes(df1:pd.DataFrame, df2:pd.DataFrame) -> pd.DataFrame:
