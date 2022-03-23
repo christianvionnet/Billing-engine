@@ -79,3 +79,4 @@ fabric.properties
 # Spyder project files
 .spyproject
 .spyproject/config
+__pycache__
