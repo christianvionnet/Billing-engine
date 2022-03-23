@@ -8,8 +8,6 @@ solution for this !
 
 ## As input
 
----
-
 This script will have to leverage 3 different input csv files and produce a single
 csv file as its final output:
 
@@ -29,8 +27,6 @@ csv file as its final output:
 
 ## As output
 
----
-
 As for the output we just need `client id`, `client name`, `bill currency` and `total amount for the bill`,
 one row per client will suffice. Client id, name and bill currency are the ones found on
 clients.csv.
@@ -42,8 +38,6 @@ different from the currency we have to bill them on, so a client can spend on CH
 be billed on TOK.
 
 ## Usage
-
----
 
 - `requirements.txt`: Dependencies for this project are listed on this file.
 
@@ -65,16 +59,20 @@ from logs_handler import MediaMonksLogger
 
 - `helpers.py`: Functions `get_total_amount()`, `merge_dataframe()` and `calculate_total()` are defined in this script. Types of parameters and outputs are specified in each function.
 
+```python
+def get_total_amount(clients:pd.DataFrame, platform_spend:pd.DataFrame, fx_rates:pd.DataFrame) -> pd.DataFrame:
+
+def merge_dataframes(df1:pd.DataFrame, df2:pd.DataFrame) -> pd.DataFrame:
+
+def calculate_total(df1:pd.DataFrame, df2:pd.DataFrame) -> float:
+```
+
 - `logs_hanlder.py`: Loggers configuration is set in this script. A file called `logfile.log` containing timestamp and code acknowledge information is created in the project folder.
 
 ## Output
 
----
-
 `final_spent.csv` is retrieved as the final output file, sorted by `Client ID`, `Client Name`, `Bill Currency`, `Service Rate` and `Total`.
 
 ## License
-
----
 
 I [unlicense](https://unlicense.org/) everything in this repository.
