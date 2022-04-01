@@ -1,4 +1,4 @@
-# Billing-engine
+# Billing Engine Challenge
 
 Build a Python script which runs billing based on the input files attached.
 
